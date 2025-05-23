@@ -1,14 +1,14 @@
-const express = require("express");
-const cors = require("cors");
+const http = require("http");
 
-const app = express();
-
-app.use(cors()); // Allow all origins by default
-app.use(express.json());
-
-// Your routes here
-app.get("/", (req, res) => {
-  res.send("Hello World");
+const app = require("./app");
+const port = process.env.PORT || 5000;
+const server = http.createServer(app, function (request, response) {
+  response.writeHead(200, {
+    "Content-Type": "text/plain",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
+  });
 });
-
-module.exports = app;
+server.listen(port, () => {
+  console.log("this app is running on " + port);
+});
