@@ -9,7 +9,7 @@ router.post("/login", async (req, res) => {
   try {
     const memberData = await Member.findOne({ email: email });
     if (!memberData) {
-      res.status(200).json({ token: null, memberData });
+      res.status(200).json({message:"member Not Found" });
     } else {
       if (memberData.password === password) {
         jwt.sign(
@@ -24,12 +24,12 @@ router.post("/login", async (req, res) => {
           }
         );
       } else {
-        // res.status(200).json({ error: "wrong Password" });
-        res.status(200).json({ token: null, memberData });
+        res.status(200).json({ error: "wrong Password" });
+        
       }
     }
   } catch (e) {
-    res.status(400).json(e);
+    res.json(e);
     console.log(e);
   }
 });
